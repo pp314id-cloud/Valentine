@@ -16,11 +16,6 @@ body {
   overflow: hidden;
 }
 
-/* HIDE CONTENT INITIALLY */
-#app {
-  display: none;
-}
-
 /* Card */
 .card {
   background: white;
@@ -31,6 +26,7 @@ body {
   width: 360px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.3);
   animation: popIn 1s ease-out;
+  z-index: 10;
 }
 
 @keyframes popIn {
@@ -67,7 +63,7 @@ button {
   color: #555;
 }
 
-/* Hearts */
+/* Floating hearts */
 .heart {
   position: absolute;
   font-size: 20px;
@@ -94,9 +90,6 @@ button {
 
 <body>
 
-<!-- 💖 APP CONTENT -->
-<div id="app">
-
 <audio autoplay loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
@@ -115,41 +108,6 @@ button {
 
   <div class="countdown" id="countdown"></div>
 </div>
-
-</div>
-
-<!-- 🔐 DATE CHECK (RUNS AFTER HTML EXISTS) -->
-<script>
-const correctDate = "05-05-2025"; // 🔴 CHANGE DATE HERE
-
-const input = prompt(
-  "💖 Enter the special date to continue\n\n" +
-  "Hum ne sabse pehle baat kb ki thi phone pe?\n" +
-  "📅 Format: DD-MM-YYYY\n" +
-  "Example: 14-02-2024"
-);
-
-if (input === correctDate) {
-  document.getElementById("app").style.display = "block";
-} else {
-  document.body.innerHTML = `
-    <div style="
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      color:white;
-      font-family:Segoe UI;
-    ">
-      <h1>
-        ❌ Wrong Date 💔<br><br>
-        Only special memories unlock this page 💖
-      </h1>
-    </div>
-  `;
-}
-</script>
 
 <script>
 function moveNo() {
