@@ -15,10 +15,12 @@ body {
   align-items: center;
   overflow: hidden;
 }
-/* HIDE APP BY DEFAULT */
+
+/* HIDE CONTENT INITIALLY */
 #app {
   display: none;
 }
+
 /* Card */
 .card {
   background: white;
@@ -29,7 +31,6 @@ body {
   width: 360px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.3);
   animation: popIn 1s ease-out;
-  z-index: 10;
 }
 
 @keyframes popIn {
@@ -66,7 +67,7 @@ button {
   color: #555;
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart {
   position: absolute;
   font-size: 20px;
@@ -74,8 +75,8 @@ button {
 }
 
 @keyframes float {
-  0% { transform: translateY(100vh); }
-  100% { transform: translateY(-10vh); }
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
 }
 
 /* Confetti */
@@ -93,18 +94,44 @@ button {
 
 <body>
 
-<!-- 🔐 DATE CHECK (EXECUTES FIRST) -->
+<!-- 💖 APP CONTENT -->
+<div id="app">
+
+<audio autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<div class="card">
+  <h1>Hey ❤️</h1>
+
+  <p>
+    <strong>Anu Madam</strong>,<br>
+    Tumhari ek smile, meri poori duniya hai 💕<br>
+    Will you be my Valentine? 🌹
+  </p>
+
+  <button id="yes" onclick="yesClick()">Yes 💖</button>
+  <button id="no" onmouseover="moveNo()">No 🙈</button>
+
+  <div class="countdown" id="countdown"></div>
+</div>
+
+</div>
+
+<!-- 🔐 DATE CHECK (RUNS AFTER HTML EXISTS) -->
 <script>
-const correctDate = "05-05-2025"; // 🔴 CHANGE THIS (DD-MM-YYYY)
-/* DATE PASSWORD GATE */
-const input  = prompt(
+const correctDate = "05-05-2025"; // 🔴 CHANGE DATE HERE
+
+const input = prompt(
   "💖 Enter the special date to continue\n\n" +
-"Hum ne sabse pehle baat kb ki thi phone pe?\n" +
+  "Hum ne sabse pehle baat kb ki thi phone pe?\n" +
   "📅 Format: DD-MM-YYYY\n" +
   "Example: 14-02-2024"
 );
 
-if (input !== correctDate) {
+if (input === correctDate) {
+  document.getElementById("app").style.display = "block";
+} else {
   document.body.innerHTML = `
     <div style="
       height:100vh;
@@ -117,49 +144,20 @@ if (input !== correctDate) {
     ">
       <h1>
         ❌ Wrong Date 💔<br><br>
-        This page opens only for special memories 💖
+        Only special memories unlock this page 💖
       </h1>
     </div>
   `;
-} else {
-  document.getElementById("app").style.display = "block";
 }
 </script>
 
-<!-- 💖 EVERYTHING INSIDE APP -->
-<div id="app">
-
-<audio autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-</audio>
-
-<div class="card">
-  <h1>Hey ❤️</h1>
-
-  <!-- CHANGE IMAGES -->
-
-
-  <p>
-    <strong>Anu Madam</strong>,<br>
-    Tumhari ek smile meri poori duniya hai 💕<br>
-    Will you be my Valentine? 🌹
-  </p>
-
-  <button id="yes" onclick="yesClick()">Yes 💖</button>
-  <button id="no" onmouseover="moveNo()">No 🙈</button>
-
-  <div class="countdown" id="countdown"></div>
-</div>
-
 <script>
-/* NO BUTTON RUNS */
 function moveNo() {
   const b = document.getElementById("no");
   b.style.top = Math.random() * 80 + "vh";
   b.style.left = Math.random() * 80 + "vw";
 }
 
-/* YES CLICK */
 function yesClick() {
   document.body.innerHTML = `
     <div style="color:white;text-align:center;padding:30px;">
@@ -169,10 +167,10 @@ function yesClick() {
   `;
 
   const text =
-  "From the first smile to this moment...\n" +
-  "I choose you.\n" +
-  "Not just today, but every day.\n" +
-  "Happy Valentine’s ❤️";
+    "From the first smile to this moment...\n" +
+    "I choose you.\n" +
+    "Not just today, but every day.\n" +
+    "Happy Valentine’s ❤️";
 
   let i = 0;
   const t = setInterval(() => {
@@ -184,7 +182,6 @@ function yesClick() {
   confetti();
 }
 
-/* CONFETTI */
 function confetti() {
   for (let i = 0; i < 80; i++) {
     const c = document.createElement("div");
@@ -197,18 +194,15 @@ function confetti() {
   }
 }
 
-/* COUNTDOWN */
 function countdown() {
   const v = new Date("Feb 14, 2026 00:00:00").getTime();
   const now = new Date().getTime();
-  const d = v - now;
-  const days = Math.floor(d / (1000 * 60 * 60 * 24));
+  const days = Math.floor((v - now) / (1000 * 60 * 60 * 24));
   document.getElementById("countdown").innerHTML =
     "⏳ " + days + " days left for Valentine’s Day";
 }
 countdown();
 
-/* FLOATING HEARTS */
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
