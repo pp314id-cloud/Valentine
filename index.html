@@ -15,7 +15,10 @@ body {
   align-items: center;
   overflow: hidden;
 }
-
+/* HIDE APP BY DEFAULT */
+#app {
+  display: none;
+}
 /* Card */
 .card {
   background: white;
@@ -90,21 +93,41 @@ button {
 
 <body>
 
+<!-- 🔐 DATE CHECK (EXECUTES FIRST) -->
 <script>
+const correctDate = "05-05-2025"; // 🔴 CHANGE THIS (DD-MM-YYYY)
 /* DATE PASSWORD GATE */
-const pass = prompt(
+const input  = prompt(
   "💖 Enter the special date to continue\n\n" +
 "Hum ne sabse pehle baat kb ki thi phone pe?\n" +
   "📅 Format: DD-MM-YYYY\n" +
   "Example: 14-02-2024"
 );
 
-// 👉 CHANGE THIS DATE PASSWORD
-if (pass !== "05-05-2025") {
-  document.body.innerHTML =
-   "<h1 style='color:white;text-align:center;'>❌ Wrong date 💔<br>Only special memories unlock this 💖</h1>";
+if (input !== correctDate) {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      color:white;
+      font-family:Segoe UI;
+    ">
+      <h1>
+        ❌ Wrong Date 💔<br><br>
+        This page opens only for special memories 💖
+      </h1>
+    </div>
+  `;
+} else {
+  document.getElementById("app").style.display = "block";
 }
 </script>
+
+<!-- 💖 EVERYTHING INSIDE APP -->
+<div id="app">
 
 <audio autoplay loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
