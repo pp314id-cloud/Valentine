@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff4d6d, #ff85a1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Card */
+.card {
+  background: white;
+  color: #333;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  width: 360px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  animation: popIn 1s ease-out;
+  z-index: 10;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+h1 { color: #ff4d6d; }
+
+img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin: 5px;
+  border: 3px solid #ff4d6d;
+  object-fit: cover;
+}
+
+button {
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes { background: #ff4d6d; color: white; }
+#no { background: #ccc; position: absolute; }
+
+.countdown {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(-10vh); }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  font-size: 20px;
+  animation: fall 3s linear;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+/* DATE PASSWORD GATE */
+const pass = prompt(
+  "💖 Enter the special date to continue\n\n" +
+"Hum ne sabse pehle baat kb ki thi phone pe?\n" +
+  "📅 Format: DD-MM-YYYY\n" +
+  "Example: 14-02-2024"
+);
+
+// 👉 CHANGE THIS DATE PASSWORD
+if (pass !== "05-05-2025") {
+  document.body.innerHTML =
+   "<h1 style='color:white;text-align:center;'>❌ Wrong date 💔<br>Only special memories unlock this 💖</h1>";
+}
+</script>
+
+<audio autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<div class="card">
+  <h1>Hey ❤️</h1>
+
+  <!-- CHANGE IMAGES -->
+  <img src="https://photos.app.goo.gl/9xaT8wtyufPPAcNH6.jpg">
+
+  <p>
+    <strong>Anu Madam</strong>,<br>
+    Tumhari ek smile meri poori duniya hai 💕<br>
+    Will you be my Valentine? 🌹
+  </p>
+
+  <button id="yes" onclick="yesClick()">Yes 💖</button>
+  <button id="no" onmouseover="moveNo()">No 🙈</button>
+
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<script>
+/* NO BUTTON RUNS */
+function moveNo() {
+  const b = document.getElementById("no");
+  b.style.top = Math.random() * 80 + "vh";
+  b.style.left = Math.random() * 80 + "vw";
+}
+
+/* YES CLICK */
+function yesClick() {
+  document.body.innerHTML = `
+    <div style="color:white;text-align:center;padding:30px;">
+      <h1 id="type"></h1>
+      <p>💖 From my heart to yours 💖</p>
+    </div>
+  `;
+
+  const text =
+  "From the first smile to this moment...\n" +
+  "I choose you.\n" +
+  "Not just today, but every day.\n" +
+  "Happy Valentine’s ❤️";
+
+  let i = 0;
+  const t = setInterval(() => {
+    document.getElementById("type").innerHTML += text.charAt(i);
+    i++;
+    if (i === text.length) clearInterval(t);
+  }, 60);
+
+  confetti();
+}
+
+/* CONFETTI */
+function confetti() {
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.innerHTML = "🎉";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.top = "-10px";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+/* COUNTDOWN */
+function countdown() {
+  const v = new Date("Feb 14, 2026 00:00:00").getTime();
+  const now = new Date().getTime();
+  const d = v - now;
+  const days = Math.floor(d / (1000 * 60 * 60 * 24));
+  document.getElementById("countdown").innerHTML =
+    "⏳ " + days + " days left for Valentine’s Day";
+}
+countdown();
+
+/* FLOATING HEARTS */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
